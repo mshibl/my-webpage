@@ -12,6 +12,7 @@
     "basehub": "^9.2.2",
     "clsx": "2.1.0",
     "date-fns": "3.6.0",
+    "framer-motion": "^12.23.9",
     "geist": "1.2.2",
     "next": "15.3.3",
     "react": "19.0.0",
