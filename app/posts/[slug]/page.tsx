@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { basehub } from "basehub";
 import { Pump } from "basehub/react-pump";
 import { Post, PostFragment } from "@/app/components/post";
-import { MoreStories } from "@/app/components/more-stories";
 import { PostMetaFragment } from "@/app/components/hero-post";
+import { AllPosts } from "@/app/components/allposts";
 
 export const dynamic = "force-static";
 
@@ -84,10 +84,7 @@ export default async function PostPage({ params }: PageProps) {
               </h2>
               <Post {...post} />
               <hr className="mt-28 mb-24" />
-              <MoreStories
-                morePosts={morePostsData.blog.posts.items}
-                title={postData.blog.morePosts}
-              />
+              <AllPosts allPosts={morePostsData.blog.posts.items} />
             </section>
           </main>
         );
