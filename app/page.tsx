@@ -1,7 +1,10 @@
 import { Pump } from "basehub/react-pump";
 import { Intro } from "./components/intro";
-import { HeroPost, PostMetaFragment } from "./components/hero-post";
-import { MoreStories } from "./components/more-stories";
+import {
+  // HeroPost,
+  PostMetaFragment,
+} from "./components/hero-post";
+// import { MoreStories } from "./components/more-stories";
 import { AllPosts } from "./components/allposts";
 
 export const dynamic = "force-static";
