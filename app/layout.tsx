@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 // import Footer from "./components/footer";
 // import { CMS_NAME } from "@/lib/constants";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
           {children}
           {/* <Footer /> */}
         </main>
+        <Analytics />
       </body>
     </html>
   );
