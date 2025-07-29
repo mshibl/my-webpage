@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Avatar from "./avatar";
+// import Avatar from "./avatar";
 import Date from "./date";
 import CoverImage from "./cover-image";
 import { PostMetaFragment } from "./hero-post";
@@ -9,7 +9,7 @@ export function PostPreview({
   coverImage,
   date,
   excerpt,
-  author,
+  // author,
   _slug,
 }: PostMetaFragment) {
   return (
@@ -26,7 +26,7 @@ export function PostPreview({
         <Date dateString={date} />
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      {author && <Avatar title={author._title} url={author.avatar.url} />}
+      {/* {author && <Avatar title={author._title} url={author.avatar.url} />} */}
     </div>
   );
 }
