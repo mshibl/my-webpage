@@ -79,7 +79,7 @@ export default async function PostPage({ params }: PageProps) {
             <section className="container mx-auto px-5 max-w-4xl">
               <h2 className="mt-6 mb-6 md:mb-4 text-xl font-bold leading-tight tracking-tight md:text-2xl">
                 <Link href="/" className="hover:underline">
-                  Mo's Blog.
+                  Mo&apos;s Blog.
                 </Link>
               </h2>
               <Post {...post} />

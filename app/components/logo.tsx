@@ -44,6 +44,7 @@ export default function Logo() {
         
         <img
           src={'/avatar2.png'}
+          alt=""
           style={{ opacity: fadeOpacity }}
           className="absolute top-0 left-0 w-full h-full object-cover rounded-full z-10"
         />

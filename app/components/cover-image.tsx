@@ -1,16 +1,13 @@
-import Link from "next/link";
 import { clsx } from "clsx";
 import { BaseHubImage } from "basehub/next-image";
 
 export default function CoverImage({
   title,
   url,
-  slug,
   size = "full",
 }: {
   title: string;
   url: string;
-  slug?: string;
   size?: "full" | "preview";
 }) {
   const image = (
