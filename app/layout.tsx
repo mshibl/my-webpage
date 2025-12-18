@@ -10,6 +10,14 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: `M. Shibl`,
   description: `Mohamed Shibl's personal website where I talk about AI and other things.`,
+  openGraph: {
+    title: `M. Shibl`,
+    description: `Mohamed Shibl's personal website where I talk about AI and other things.`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({

@@ -34,9 +34,30 @@ export async function generateMetadata({
   const [post] = postData.blog.posts.items;
   if (!post) notFound();
 
+  const ogImageUrl = post.coverImage.url;
+
   return {
     title: `Post / ${post._title}`,
     description: post.excerpt,
+    openGraph: {
+      title: post._title,
+      description: post.excerpt,
+      type: "article",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 627,
+          alt: post.coverImage.alt || post._title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post._title,
+      description: post.excerpt,
+      images: [ogImageUrl],
+    },
   };
 }
 
