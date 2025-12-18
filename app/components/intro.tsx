@@ -8,13 +8,13 @@ import { GitHubIcon } from "./icons/github-icon";
 
 export function Intro() {
   return (
-    <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-16 md:mb-12">
+    <section className="flex-col md:flex-row flex items-center md:justify-between mt-10 mb-10 md:mb-8">
       <div className="flex items-center">
         <div className="mr-4">
           <Logo />
         </div>
-        <h2 className="text-3xl md:text-6xl font-bold tracking-tighter leading-tight md:pr-8">
-          Shibl&apos;s Blog
+        <h2 className="text-2xl md:text-4xl font-bold tracking-tight leading-tight md:pr-8">
+          Mo&apos;s Blog
         </h2> 
       </div>
       <div className="flex items-center space-x-4 mt-5 md:pl-8">

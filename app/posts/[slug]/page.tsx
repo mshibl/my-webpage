@@ -76,14 +76,14 @@ export default async function PostPage({ params }: PageProps) {
 
         return (
           <main>
-            <section className="container mx-auto px-5">
-              <h2 className="mt-16 mb-16 md:mb-12 text-2xl font-bold leading-tight tracking-tight md:text-4xl md:tracking-tighter">
+            <section className="container mx-auto px-5 max-w-4xl">
+              <h2 className="mt-6 mb-6 md:mb-4 text-xl font-bold leading-tight tracking-tight md:text-2xl">
                 <Link href="/" className="hover:underline">
-                  Blog.
+                  Mo's Blog.
                 </Link>
               </h2>
               <Post {...post} />
-              <hr className="mt-28 mb-24" />
+              <hr className="mt-12 mb-10" />
               <AllPosts allPosts={morePostsData.blog.posts.items} />
             </section>
           </main>

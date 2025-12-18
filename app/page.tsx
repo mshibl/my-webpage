@@ -33,7 +33,7 @@ export default async function Page() {
 
         return (
           <main>
-            <section className="container mx-auto px-5">
+            <section className="container mx-auto px-5 max-w-7xl">
               <Intro />
               {/* {heroPost && <HeroPost {...heroPost} />} */}
               {/* <MoreStories morePosts={morePosts} title={blog.morePosts} /> */}

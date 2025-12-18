@@ -6,10 +6,12 @@ export default function CoverImage({
   title,
   url,
   slug,
+  size = "full",
 }: {
   title: string;
   url: string;
   slug?: string;
+  size?: "full" | "preview";
 }) {
   const image = (
     <BaseHubImage
@@ -17,22 +19,20 @@ export default function CoverImage({
       priority
       width={2000}
       height={1000}
-      className={clsx("shadow-sm rounded-lg", {
-        "hover:shadow-md transition-shadow duration-200": slug,
+      className={clsx("w-full h-full object-cover", {
+        "rounded-lg": size === "preview",
+        "shadow-sm rounded-lg": size === "full",
+        "group-hover:scale-105 transition-transform duration-300": size === "preview",
+        "hover:shadow-md transition-shadow duration-200": size === "full",
+        "max-w-4xl": size === "full",
       })}
       src={url}
     />
   );
 
   return (
-    <div className="sm:mx-0">
-      {slug ? (
-        <Link href={`/posts/${slug}`} aria-label={title}>
-          {image}
-        </Link>
-      ) : (
-        image
-      )}
+    <div className={clsx("sm:mx-0", { "w-full h-full absolute inset-0": size === "preview" })}>
+      {image}
     </div>
   );
 }

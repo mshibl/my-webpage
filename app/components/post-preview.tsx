@@ -13,20 +13,24 @@ export function PostPreview({
   _slug,
 }: PostMetaFragment) {
   return (
-    <div>
-      <div className="mb-5">
-        <CoverImage title={_title} slug={_slug} url={coverImage.url} />
-      </div>
-      <h3 className="text-3xl mb-3 leading-snug">
-        <Link href={`/posts/${_slug}`} className="hover:underline">
-          {_title}
-        </Link>
-      </h3>
-      <div className="text-base dark:text-white/60 text-black/60 mb-4">
-        <Date dateString={date} />
-      </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
+    <Link href={`/posts/${_slug}`} className="flex flex-col h-full group">
+      <article className="flex flex-col h-full rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-200 bg-white dark:bg-gray-900 hover:shadow-md">
+        <div className="overflow-hidden bg-gray-100 dark:bg-gray-800 aspect-[16/9] w-full relative">
+          <CoverImage title={_title} url={coverImage.url} size="preview" />
+        </div>
+        <div className="flex flex-col flex-grow p-4">
+          <h3 className="text-lg md:text-xl font-bold mb-2 leading-tight line-clamp-2 group-hover:text-orange-500 transition-colors">
+            {_title}
+          </h3>
+          <div className="text-xs dark:text-white/50 text-black/50 mb-3">
+            <Date dateString={date} />
+          </div>
+          <p className="text-sm leading-relaxed text-black/70 dark:text-white/70 line-clamp-3">
+            {excerpt}
+          </p>
+        </div>
+      </article>
       {/* {author && <Avatar title={author._title} url={author.avatar.url} />} */}
-    </div>
+    </Link>
   );
 }

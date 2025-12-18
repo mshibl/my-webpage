@@ -46,8 +46,7 @@ export interface Scalars {
   options: string[];
   multiple: boolean
 } | {
-  type: "file";
-  private: boolean
+  type: "file"
 }))[],
     BSHBRichTextContentSchema: RichTextNode[],
     BSHBRichTextTOCSchema: RichTextTocNode[],
@@ -93,6 +92,8 @@ export interface Authors {
 export interface AuthorsItem {
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight: (SearchHighlight[] | null)
     _id: Scalars['String']
     _idPath: Scalars['String']
     _slug: Scalars['String']
@@ -103,7 +104,7 @@ export interface AuthorsItem {
     __typename: 'AuthorsItem'
 }
 
-export type AuthorsItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'avatar__ASC' | 'avatar__DESC'
+export type AuthorsItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'avatar__ASC' | 'avatar__DESC' | 'untitled__ASC' | 'untitled__DESC'
 
 export interface BaseRichTextJson {
     blocks: Scalars['String']
@@ -142,7 +143,7 @@ export interface BlockColor {
     __typename: 'BlockColor'
 }
 
-export type BlockDocument = (Authors | AuthorsItem | Blog | Meta | Newsletter | Posts | PostsItem | _AgentSTART | authorsItem_AsList | postsItem_AsList) & { __isUnion?: true }
+export type BlockDocument = (Authors | AuthorsItem | Blog | Meta | Newsletter | Posts | PostsItem | _AgentStart | authorsItem_AsList | postsItem_AsList) & { __isUnion?: true }
 
 export interface BlockDocumentSys {
     apiNamePath: Scalars['String']
@@ -360,6 +361,8 @@ export interface Posts {
 export interface PostsItem {
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight: (SearchHighlight[] | null)
     _id: Scalars['String']
     _idPath: Scalars['String']
     _slug: Scalars['String']
@@ -378,11 +381,13 @@ export interface PostsItem {
 export type PostsItemOrderByEnum = '_sys_createdAt__ASC' | '_sys_createdAt__DESC' | '_sys_hash__ASC' | '_sys_hash__DESC' | '_sys_id__ASC' | '_sys_id__DESC' | '_sys_lastModifiedAt__ASC' | '_sys_lastModifiedAt__DESC' | '_sys_slug__ASC' | '_sys_slug__DESC' | '_sys_title__ASC' | '_sys_title__DESC' | 'author__ASC' | 'author__DESC' | 'body__ASC' | 'body__DESC' | 'coverImage__ASC' | 'coverImage__DESC' | 'date__ASC' | 'date__DESC' | 'excerpt__ASC' | 'excerpt__DESC'
 
 export interface Query {
-    _agent: (_AgentSTART | null)
+    _agent: (_AgentStart | null)
     /** Query across the custom AI agents in the repository. */
     _agents: _agents
     /** Query across all of the instances of a component. Pass in filters and sorts if you want, and get each instance via the `items` key. */
     _componentInstances: _components
+    /** The diff between the current branch and the head commit. */
+    _diff: Scalars['JSON']
     /** The structure of the repository. Used by START. */
     _structure: Scalars['JSON']
     _sys: RepoSys
@@ -394,6 +399,8 @@ export interface Query {
 
 export interface RepoSys {
     branches: _Branches
+    dashboardUrl: Scalars['String']
+    forkUrl: Scalars['String']
     hash: Scalars['String']
     id: Scalars['ID']
     playgroundInfo: (_PlaygroundInfo | null)
@@ -403,6 +410,14 @@ export interface RepoSys {
 }
 
 export type RichTextJson = (BaseRichTextJson | BodyRichText) & { __isUnion?: true }
+
+export interface SearchHighlight {
+    /** The field/path that was matched (e.g., "title", "body.content") */
+    by: Scalars['String']
+    /** HTML snippet with <mark> tags around the matched terms */
+    snippet: Scalars['String']
+    __typename: 'SearchHighlight'
+}
 
 export interface SendNewPost {
     /** The `webhookSecret` is used to verify the authenticity of the webhook request, and also to type the payload. */
@@ -441,7 +456,7 @@ export interface Variant {
     __typename: 'Variant'
 }
 
-export interface _AgentSTART {
+export interface _AgentStart {
     _agentKey: Scalars['String']
     _analyticsKey: Scalars['String']
     _dashboardUrl: Scalars['String']
@@ -463,10 +478,11 @@ export interface _AgentSTART {
     manageBranches: Scalars['Boolean']
     mcpUrl: Scalars['String']
     model: Scalars['String']
+    openRouterKey: (Scalars['String'] | null)
     searchTheWeb: Scalars['Boolean']
     slackInstallUrl: Scalars['String']
     systemPrompt: Scalars['String']
-    __typename: '_AgentSTART'
+    __typename: '_AgentStart'
 }
 
 export interface _BranchInfo {
@@ -535,7 +551,7 @@ export type _ResolveTargetsWithEnum = 'id' | 'objectName'
 export type _StructureFormatEnum = 'json' | 'xml'
 
 export interface _agents {
-    start: _AgentSTART
+    start: _AgentStart
     __typename: '_agents'
 }
 
@@ -617,6 +633,8 @@ export interface AuthorsItemGenqlSelection{
      */
     scope?: (AnalyticsKeyScope | null)} } | boolean | number
     _dashboardUrl?: boolean | number
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight?: SearchHighlightGenqlSelection
     _id?: boolean | number
     _idPath?: boolean | number
     _slug?: boolean | number
@@ -628,6 +646,12 @@ export interface AuthorsItemGenqlSelection{
 }
 
 export interface AuthorsItemFilterInput {AND?: (AuthorsItemFilterInput | null),OR?: (AuthorsItemFilterInput | null),_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null)}
+
+export interface AuthorsItemSearchInput {
+/** Searchable fields for query */
+by?: (Scalars['String'][] | null),
+/** Search query */
+q?: (Scalars['String'] | null)}
 
 export interface BaseRichTextJsonGenqlSelection{
     blocks?: boolean | number
@@ -690,7 +714,7 @@ export interface BlockDocumentGenqlSelection{
     on_Newsletter?: NewsletterGenqlSelection
     on_Posts?: PostsGenqlSelection
     on_PostsItem?: PostsItemGenqlSelection
-    on__AgentSTART?: _AgentSTARTGenqlSelection
+    on__AgentStart?: _AgentStartGenqlSelection
     on_authorsItem_AsList?: authorsItem_AsListGenqlSelection
     on_postsItem_AsList?: postsItem_AsListGenqlSelection
     __typename?: boolean | number
@@ -839,6 +863,8 @@ export interface BlogGenqlSelection{
     first?: (Scalars['Int'] | null), 
     /** Order by a field. */
     orderBy?: (AuthorsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (AuthorsItemSearchInput | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     morePosts?: boolean | number
@@ -849,6 +875,8 @@ export interface BlogGenqlSelection{
     first?: (Scalars['Int'] | null), 
     /** Order by a field. */
     orderBy?: (PostsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (PostsItemSearchInput | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
@@ -1049,6 +1077,8 @@ export interface PostsItemGenqlSelection{
      */
     scope?: (AnalyticsKeyScope | null)} } | boolean | number
     _dashboardUrl?: boolean | number
+    /** Array of search highlight information with field names and HTML markup */
+    _highlight?: SearchHighlightGenqlSelection
     _id?: boolean | number
     _idPath?: boolean | number
     _slug?: boolean | number
@@ -1068,14 +1098,24 @@ export interface PostsItemFilterInput {AND?: (PostsItemFilterInput | null),OR?: 
 
 export interface PostsItemFilterInput__author_0___untitled {_id?: (StringFilter | null),_slug?: (StringFilter | null),_sys_apiNamePath?: (StringFilter | null),_sys_createdAt?: (DateFilter | null),_sys_hash?: (StringFilter | null),_sys_id?: (StringFilter | null),_sys_idPath?: (StringFilter | null),_sys_lastModifiedAt?: (DateFilter | null),_sys_slug?: (StringFilter | null),_sys_slugPath?: (StringFilter | null),_sys_title?: (StringFilter | null),_title?: (StringFilter | null)}
 
+export interface PostsItemSearchInput {
+/** Searchable fields for query */
+by?: (Scalars['String'][] | null),
+/** Search query */
+q?: (Scalars['String'] | null)}
+
 export interface QueryGenqlSelection{
-    _agent?: (_AgentSTARTGenqlSelection & { __args: {
+    _agent?: (_AgentStartGenqlSelection & { __args: {
     /** The ID of the agent. */
     id: Scalars['String']} })
     /** Query across the custom AI agents in the repository. */
     _agents?: _agentsGenqlSelection
     /** Query across all of the instances of a component. Pass in filters and sorts if you want, and get each instance via the `items` key. */
     _componentInstances?: _componentsGenqlSelection
+    /** The diff between the current branch and the head commit. */
+    _diff?: { __args: {
+    /** Simplified diff returns only the items array showing statuses. */
+    simplified?: (Scalars['Boolean'] | null)} } | boolean | number
     /** The structure of the repository. Used by START. */
     _structure?: { __args: {
     /** The format of the structure. */
@@ -1099,6 +1139,8 @@ export interface QueryGenqlSelection{
 
 export interface RepoSysGenqlSelection{
     branches?: (_BranchesGenqlSelection & { __args?: {limit?: (Scalars['Int'] | null), offset?: (Scalars['Int'] | null)} })
+    dashboardUrl?: boolean | number
+    forkUrl?: boolean | number
     hash?: boolean | number
     id?: boolean | number
     playgroundInfo?: _PlaygroundInfoGenqlSelection
@@ -1112,6 +1154,14 @@ export interface RichTextJsonGenqlSelection{
     toc?: boolean | number
     on_BaseRichTextJson?: BaseRichTextJsonGenqlSelection
     on_BodyRichText?: BodyRichTextGenqlSelection
+    __typename?: boolean | number
+}
+
+export interface SearchHighlightGenqlSelection{
+    /** The field/path that was matched (e.g., "title", "body.content") */
+    by?: boolean | number
+    /** HTML snippet with <mark> tags around the matched terms */
+    snippet?: boolean | number
     __typename?: boolean | number
 }
 
@@ -1158,7 +1208,7 @@ export interface VariantGenqlSelection{
     __typename?: boolean | number
 }
 
-export interface _AgentSTARTGenqlSelection{
+export interface _AgentStartGenqlSelection{
     _agentKey?: boolean | number
     _analyticsKey?: { __args: {
     /**
@@ -1186,6 +1236,7 @@ export interface _AgentSTARTGenqlSelection{
     manageBranches?: boolean | number
     mcpUrl?: boolean | number
     model?: boolean | number
+    openRouterKey?: boolean | number
     searchTheWeb?: boolean | number
     slackInstallUrl?: boolean | number
     systemPrompt?: boolean | number
@@ -1254,7 +1305,7 @@ export interface _PlaygroundInfoGenqlSelection{
 }
 
 export interface _agentsGenqlSelection{
-    start?: _AgentSTARTGenqlSelection
+    start?: _AgentStartGenqlSelection
     __typename?: boolean | number
 }
 
@@ -1266,6 +1317,8 @@ export interface _componentsGenqlSelection{
     first?: (Scalars['Int'] | null), 
     /** Order by a field. */
     orderBy?: (AuthorsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (AuthorsItemSearchInput | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     postsItem?: (postsItem_AsListGenqlSelection & { __args?: {
@@ -1275,6 +1328,8 @@ export interface _componentsGenqlSelection{
     first?: (Scalars['Int'] | null), 
     /** Order by a field. */
     orderBy?: (PostsItemOrderByEnum | null), 
+    /** Search configuration */
+    search?: (PostsItemSearchInput | null), 
     /** Skip the first n items. */
     skip?: (Scalars['Int'] | null)} })
     __typename?: boolean | number
@@ -1443,6 +1498,10 @@ export interface FragmentsMap {
     root: RichTextJson,
     selection: RichTextJsonGenqlSelection,
 }
+  SearchHighlight: {
+    root: SearchHighlight,
+    selection: SearchHighlightGenqlSelection,
+}
   SendNewPost: {
     root: SendNewPost,
     selection: SendNewPostGenqlSelection,
@@ -1459,9 +1518,9 @@ export interface FragmentsMap {
     root: Variant,
     selection: VariantGenqlSelection,
 }
-  _AgentSTART: {
-    root: _AgentSTART,
-    selection: _AgentSTARTGenqlSelection,
+  _AgentStart: {
+    root: _AgentStart,
+    selection: _AgentStartGenqlSelection,
 }
   _BranchInfo: {
     root: _BranchInfo,

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef } from 'react';
 
 export default function Logo() {
@@ -35,7 +37,7 @@ export default function Logo() {
   const fadeOpacity = 1 - mouseDistance;
 
   return (
-    <div ref={logoRef} className="relative w-16 h-16 mx-auto">
+    <div ref={logoRef} className="relative w-12 h-12 mx-auto">
         <div className="absolute top-0 left-0 w-full h-full rounded-full">
             <img src="/avatar1.png" alt="logo" className="w-full h-full object-cover rounded-full" />
         </div>
